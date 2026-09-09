@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Shop — ALTAR</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+
+    :root {
+      --black: #090807;
+      --wine: #4a0d13;
+      --emerald: #0d3329;
+      --sapphire: #10264d;
+
+      --gold: #b58b43;
+      --gold-light: #e0c27d;
+      --gold-dark: #725222;
+
+      --cream: #eee2c9;
+      --muted: #a99a80;
+
+      --border: rgba(181, 139, 67, 0.28);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top, rgba(181,139,67,0.08), transparent 30%),
+        var(--black);
+
+      color: var(--cream);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.04;
+
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* NAVIGATION */
+
+    nav {
+      height: 82px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 6%;
+      border-bottom: 1px solid var(--border);
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(74,13,19,0.3),
+          rgba(9,8,7,0.95),
+          rgba(16,38,77,0.3)
+        );
+    }
+
+    .nav-left,
+    .nav-right {
+      display: flex;
+      gap: 1.8rem;
+    }
+
+    .nav-right {
+      justify-content: flex-end;
+    }
+
+    nav a:not(.logo) {
+      font-family: "Cinzel", serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.17em;
+      color: rgba(238,226,201,0.68);
+      transition: 0.3s;
+    }
+
+    nav a:not(.logo):hover,
+    nav .active {
+      color: var(--gold-light);
+    }
+
+    .logo {
+      font-family: "Cinzel", serif;
+      font-size: 1.9rem;
+      letter-spacing: 0.28em;
+      color: var(--gold-light);
+    }
+
+    /* PAGE HERO */
+
+    .page-hero {
+      padding: 8rem 10% 6rem;
+      text-align: center;
+
+      background:
+        radial-gradient(circle at center, rgba(181,139,67,0.12), transparent 38%),
+        linear-gradient(
+          135deg,
+          rgba(74,13,19,0.18),
+          transparent,
+          rgba(16,38,77,0.18)
+        );
+    }
+
+    .label {
+      font-family: "Cinzel", serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .page-hero h1 {
+      font-family: "Cinzel", serif;
+      font-size: clamp(4rem, 9vw, 9rem);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--gold-light);
+
+      text-shadow:
+        0 4px 0 var(--gold-dark),
+        0 25px 60px rgba(0,0,0,0.7);
+    }
+
+    .line {
+      width: 120px;
+      height: 1px;
+      background: var(--gold);
+      margin: 2rem auto;
+    }
+
+    .page-hero p:last-child {
+      max-width: 520px;
+      margin: auto;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.4rem;
+      line-height: 1.5;
+      color: rgba(238,226,201,0.75);
+    }
+
+    /* CATEGORY SECTION */
+
+    .shop {
+      padding: 6rem 6% 8rem;
+    }
+
+    .shop-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .shop-top h2 {
+      font-family: "Cinzel", serif;
+      font-size: clamp(2rem, 4vw, 4rem);
+      font-weight: 400;
+      color: var(--cream);
+    }
+
+    .shop-top span {
+      font-family: "Cinzel", serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    .category {
+      min-height: 520px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: 0.4s;
+    }
+
+    .category:hover {
+      transform: translateY(-10px);
+      border-color: var(--gold-light);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+    }
+
+    .category::after {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(224,194,125,0.13);
+      pointer-events: none;
+    }
+
+    .category.colorings {
+      background:
+        radial-gradient(circle at 50% 45%, rgba(140,30,45,0.5), transparent 55%),
+        var(--wine);
+    }
+
+    .category.bundles {
+      background:
+        radial-gradient(circle at 50% 45%, rgba(35,115,85,0.5), transparent 55%),
+        var(--emerald);
+    }
+
+    .category.transitions {
+      background:
+        radial-gradient(circle at 50% 45%, rgba(45,90,165,0.5), transparent 55%),
+        var(--sapphire);
+    }
+
+    .roman {
+      position: relative;
+      z-index: 2;
+
+      font-family: "Cinzel", serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--gold-light);
+    }
+
+    .category-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .category h3 {
+      font-family: "Cinzel", serif;
+      font-size: clamp(1.7rem, 3vw, 3rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--gold-light);
+    }
+
+    .category p {
+      margin-top: 1rem;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.25rem;
+      line-height: 1.4;
+      color: rgba(238,226,201,0.8);
+    }
+
+    .explore {
+      display: inline-block;
+      margin-top: 2rem;
+
+      font-family: "Cinzel", serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.17em;
+      color: var(--cream);
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 4rem 6% 2rem;
+      border-top: 1px solid var(--border);
+      background:
+        linear-gradient(
+          90deg,
+          rgba(74,13,19,0.18),
+          var(--black),
+          rgba(16,38,77,0.18)
+        );
+    }
+
+    .footer-main {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer-logo {
+      font-family: "Cinzel", serif;
+      font-size: 2rem;
+      letter-spacing: 0.25em;
+      color: var(--gold-light);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      font-family: "Cinzel", serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+    }
+
+    .footer-bottom {
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+
+      font-family: "Cinzel", serif;
+      font-size: 0.52rem;
+      letter-spacing: 0.12em;
+      color: rgba(238,226,201,0.4);
+    }
+
+    @media (max-width: 850px) {
+
+      nav {
+        display: flex;
+        justify-content: center;
+      }
+
+      .nav-left,
+      .nav-right {
+        display: none;
+      }
+
+      .categories {
+        grid-template-columns: 1fr;
+      }
+
+      .category {
+        min-height: 380px;
+      }
+
+      .shop-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .footer-main {
+        flex-direction: column;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+
+      .page-hero {
+        padding: 6rem 7% 5rem;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <nav>
+
+    <div class="nav-left">
+      <a href="shop.html" class="active">SHOP</a>
+      <a href="about.html">ABOUT</a>
+    </div>
+
+    <a href="index.html" class="logo">ALTAR</a>
+
+    <div class="nav-right">
+      <a href="support.html">SUPPORT</a>
+    </div>
+
+  </nav>
+
+
+  <main>
+
+    <section class="page-hero">
+
+      <p class="label">THE ALTAR COLLECTION</p>
+
+      <h1>SHOP</h1>
+
+      <div class="line"></div>
+
+      <p>
+        Explore creative resources created for editors,
+        from carefully crafted colourings to complete
+        collections and transition packs.
+      </p>
+
+    </section>
+
+
+    <section class="shop">
+
+      <div class="shop-top">
+
+        <div>
+          <p class="label">SELECT A COLLECTION</p>
+          <h2>The Archive</h2>
+        </div>
+
+        <span>III COLLECTIONS</span>
+
+      </div>
+
+
+      <div class="categories">
+
+        <a href="colorings.html" class="category colorings">
+
+          <span class="roman">I</span>
+
+          <div class="category-content">
+
+            <h3>Colouring<br>Packs</h3>
+
+            <p>
+              Individual colouring collections
+              created to change the atmosphere
+              of your edits.
+            </p>
+
+            <span class="explore">EXPLORE COLLECTION →</span>
+
+          </div>
+
+        </a>
+
+
+        <a href="bundles.html" class="category bundles">
+
+          <span class="roman">II</span>
+
+          <div class="category-content">
+
+            <h3>Colouring<br>Bundles</h3>
+
+            <p>
+              Multiple colouring collections
+              brought together in one
+              complete archive.
+            </p>
+
+            <span class="explore">EXPLORE COLLECTION →</span>
+
+          </div>
+
+        </a>
+
+
+        <a href="transitions.html" class="category transitions">
+
+          <span class="roman">III</span>
+
+          <div class="category-content">
+
+            <h3>Transition<br>Packs</h3>
+
+            <p>
+              Creative transitions designed
+              to make movement feel
+              deliberate and seamless.
+            </p>
+
+            <span class="explore">EXPLORE COLLECTION →</span>
+
+          </div>
+
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    <div class="footer-main">
+
+      <div class="footer-logo">ALTAR</div>
+
+      <div class="footer-links">
+        <a href="index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="support.html">SUPPORT</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <span>© 2026 ALTAR. ALL RIGHTS RESERVED.</span>
+
+      <span>DIGITAL RESOURCES FOR EDITORS.</span>
+
+    </div>
+
+  </footer>
+
+</body>
+</html>
